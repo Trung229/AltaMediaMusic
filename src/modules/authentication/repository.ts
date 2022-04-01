@@ -17,6 +17,20 @@ const login = (payload: ILoginDTO) => {
   });
 };
 
+interface IScheduleParam{
+  TimeBegin:string;
+  TimeEnd:string;
+}
+
+const getSchedule = (params: IScheduleParam) => {
+  return httpRepository.execute({
+    path: '/Schedules/GetSchedulesOfDevice',
+    method: 'get',
+    params
+  });
+};
+
 export default {
-  login
+  login,
+  getSchedule
 }

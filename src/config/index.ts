@@ -3,7 +3,6 @@ export const BuildConfig = {
   env_key: 'vms',
 };
 export const env_set: any = {
-  vms: {
     mqtt: 'mqtt://vernemq.altacloud.biz:1883',
     clientId: '000011113',
     S3: 'https://alta-s3.dev-altamedia.com/vms-mtc/SMediaContentS/1647060724092.txt',
@@ -22,7 +21,6 @@ export const env_set: any = {
         production: 'XrUFvbmSjOvWgN_L_IfQU8aOL7fYmEtKipmn0',
       },
     }),
-  },
 };
 
 export const MIRA_CODE = {

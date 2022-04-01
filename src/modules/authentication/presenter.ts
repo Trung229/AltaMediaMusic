@@ -2,13 +2,12 @@ import store from '~core/store';
 import profileStore from './profileStore';
 import repository, {ILoginDTO} from './repository';
 
-const authPresenter: any = {...repository};
+const authPresenter = {...repository};
 
-authPresenter.signIn = async (
-  payload : ILoginDTO,
-  remember = false
+authPresenter.login = async (
+  payload : ILoginDTO
 ) => {
-  const token = await authPresenter.login(payload)
+  const token = await repository.login(payload)
   store.dispatch(profileStore.actions.login(token?.deviceToken))
   return token
 }
