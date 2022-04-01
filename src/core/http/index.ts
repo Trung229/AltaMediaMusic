@@ -61,7 +61,7 @@ export class HTTPRepository {
     if (showSuccess) {
       Toast.show({
         type: 'success',
-        text1: locale[this.language]['success'],
+        text1: locale[this.language][response?.data?.message],
       });
     }
     if (convert !== undefined) {
