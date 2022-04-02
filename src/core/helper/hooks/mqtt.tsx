@@ -3,7 +3,7 @@ import MQTT, {IMqttClient} from 'sp-react-native-mqtt';
 import lodash, {toString} from 'lodash';
 import {toObject} from '~core/helper/hoc';
 import {randIdCreator} from '~core/helper/math';
-import {BuildConfig, env_set} from '~config';
+import { env_set} from '~config';
 export interface I_WILL {
   topic: string;
   msg: any;
@@ -154,7 +154,7 @@ const MQTTProvider: React.FC<{
     const deviceId = randIdCreator().replace(/[^a-zA-Z0-9]+/g, '');
 
     const option: any = {
-      uri: options?.uri || env_set[BuildConfig.env_key].mqtt,
+      uri: options?.uri || env_set.mqtt,
       clientId: `mobile.${options?.clientId || 'unknown'}.${deviceId}`,
       user: options?.user,
       pass: options?.pass,

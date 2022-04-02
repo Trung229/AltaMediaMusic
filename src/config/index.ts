@@ -1,7 +1,5 @@
 import {Platform} from 'react-native';
-export const BuildConfig = {
-  env_key: 'vms',
-};
+
 export const env_set: any = {
     mqtt: 'mqtt://vernemq.altacloud.biz:1883',
     clientId: '000011113',
@@ -13,14 +11,15 @@ export const env_set: any = {
     installID: '',
     codePush: Platform.select({
       ios: {
-        staging: '_tykB0FvL2mKAcFML0SXXyPxfew4JZs71I1r1',
-        production: 'Niq-KUNKgapnzYLsH_uFqaJK0ROwDijayB9yZ',
+        staging: '',
+        production: '',
       },
       android: {
-        staging: '06DP2t3ihvat9iW8j_u6YTHhjp4nTNpWoqMRM',
-        production: 'XrUFvbmSjOvWgN_L_IfQU8aOL7fYmEtKipmn0',
+        staging: '',
+        production: '',
       },
     }),
+
 };
 
 export const MIRA_CODE = {

@@ -46,7 +46,7 @@ export const Auth: React.FC<any> = props => {
           backgroundColor: 'white',
         }}
       />
-      <TouchableOpacity onPress={() => a()}>
+      <TouchableOpacity onPress={() => console.log('Hi')}>
         <Text>Translate</Text>
       </TouchableOpacity>
 

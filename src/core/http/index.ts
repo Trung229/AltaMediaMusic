@@ -1,4 +1,4 @@
-import {BuildConfig as CONFIG, env_set} from '~config/index';
+import {env_set} from '~config/index';
 import axios, {AxiosInstance} from 'axios';
 import {removeProfile} from '~modules/authentication/profileStore';
 import store from '~core/store';
@@ -29,7 +29,7 @@ export class HTTPRepository {
 
   constructor(baseURL?: string, rootStore?: any) {
     this.service = axios.create({
-      baseURL: baseURL || env_set[CONFIG.env_key].API_BASE_URL,
+      baseURL: baseURL || env_set.API_BASE_URL,
       withCredentials: false,
     });
     this.setStore(rootStore);
@@ -194,7 +194,7 @@ export class HTTPRepository {
   }
 }
 const httpRepository = new HTTPRepository(
-  env_set[CONFIG.env_key].API_BASE_URL,
+  env_set.API_BASE_URL,
   store,
 );
 export default httpRepository;

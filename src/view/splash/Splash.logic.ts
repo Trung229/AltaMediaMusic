@@ -1,7 +1,7 @@
 import React from 'react';
 import CodePush from 'react-native-code-push';
 import {useDispatch, useSelector} from 'react-redux';
-import {BuildConfig, env_set} from '~config';
+import {env_set} from '~config';
 import settingStore, {CodePushSelector} from '~modules/setting/settingStore';
 export const SplashLogic = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export const SplashLogic = () => {
 
   React.useEffect(() => {
     if (!__DEV__) {
-      const deploymentKey: string = env_set[BuildConfig.env_key].codePush[mode];
+      const deploymentKey: string = env_set.codePush[mode];
       setTimeout(() => {
         CodePush.sync(
           !!deploymentKey
@@ -32,7 +32,7 @@ export const SplashLogic = () => {
   const codePushStatusDidChange = (syncStatus: number) => {
     switch (syncStatus) {
       case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
-        setLabel(env_set[BuildConfig.env_key].fvers);
+        setLabel(env_set.fvers);
         break;
       case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
         setLabel('downloading package.');
@@ -44,7 +44,7 @@ export const SplashLogic = () => {
         setLabel('installing update.');
         break;
       case CodePush.SyncStatus.UP_TO_DATE:
-        setLabel(env_set[BuildConfig.env_key].fvers);
+        setLabel(env_set.fvers);
         setCodePushSuccess(true);
         break;
       case CodePush.SyncStatus.UPDATE_IGNORED:
@@ -62,7 +62,7 @@ export const SplashLogic = () => {
         setCodePushSuccess(true);
         break;
       default:
-        setLabel(env_set[BuildConfig.env_key].fvers);
+        setLabel(env_set.fvers);
         setCodePushSuccess(true);
         break;
     }
