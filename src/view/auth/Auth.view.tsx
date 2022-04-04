@@ -1,28 +1,21 @@
 import React from 'react';
-import {View, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
-import {styles} from './Auth.styles';
-import {AuthLogic} from './Auth.logic';
-import {FlatButton, FullScreenLoadingIndicator} from '~components';
+import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { styles } from './Auth.styles';
+import { AuthLogic, navigateToMain } from './Auth.logic';
+import { FlatButton, FullScreenLoadingIndicator } from '~components';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import authPresenter from '~modules/authentication/presenter';
-import {useSingleAsync} from '~core/helper/hooks/useSingleAsync';
-import {useAltaIntl} from '~core/helper/hooks/translate';
-import {useDispatch} from 'react-redux';
-import settingStore from '~modules/setting/settingStore';
+import { useSingleAsync } from '~core/helper/hooks/useSingleAsync';
+import { useAltaIntl } from '~core/helper/hooks/translate';
 export const Auth: React.FC<any> = props => {
-  const {} = props;
-  const {translate} = useAltaIntl();
-  const {dispatch, language} = AuthLogic();
-  const {login} = authPresenter;
+  const { } = props;
+  const { formatMessage } = useAltaIntl();
+  const { login } = authPresenter;
   const signInBySingleAsync = useSingleAsync(login);
-  const a = () => {
-    dispatch(
-      settingStore.actions.updateLanguage(language == 'vi' ? 'en' : 'vi'),
-    );
-  };
+
   return (
     <View style={styles.container}>
       <FlatButton
@@ -37,7 +30,7 @@ export const Auth: React.FC<any> = props => {
             })
             .catch(err => console.log('err', err));
         }}
-        title="SUBMIT"
+        title={formatMessage("common.submit")}
         containerStyle={{
           width: wp(30),
           borderRadius: 5,
@@ -46,11 +39,19 @@ export const Auth: React.FC<any> = props => {
           backgroundColor: 'white',
         }}
       />
-      <TouchableOpacity onPress={() => console.log('Hi')}>
-        <Text>Translate</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.txt}>{translate('welcome')}</Text>
+      <FlatButton
+        onPress={() => {
+          navigateToMain(props)
+        }}
+        title="Navigate"
+        containerStyle={{
+          width: wp(30),
+          borderRadius: 5,
+          borderWidth: 2,
+          borderColor: 'orange',
+          backgroundColor: 'white',
+        }}
+      />
       <FullScreenLoadingIndicator
         visible={signInBySingleAsync?.status == 'loading'}
       />

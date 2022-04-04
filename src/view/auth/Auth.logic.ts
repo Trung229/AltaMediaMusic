@@ -5,3 +5,8 @@ export const AuthLogic = () => {
   const dispatch = useDispatch();
   return {dispatch, language};
 };
+
+
+export const navigateToMain = (props:any):void =>{
+  props.navigation.navigate("MainScreen");
+}

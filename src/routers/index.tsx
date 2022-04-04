@@ -3,7 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {CodePushSelector} from '~modules/setting/settingStore';
-import {Splash, Auth} from '~view';
+import {Splash, Auth, Main} from '~view';
 import {navigationRef} from '~core/helper/navigate';
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +21,7 @@ const MainRouter = () => {
             return <Stack.Screen name={`${res}`} component={res} />;
           })
         )}
+        <Stack.Screen name="MainScreen" component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
   );

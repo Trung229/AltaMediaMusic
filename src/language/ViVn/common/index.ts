@@ -74,4 +74,8 @@ export default {
   'common.return': 'Quay lại',
   'common.search.placeholder': 'Nhập từ khóa để tìm kiếm',
   'common.export': 'Xuất file',
+  "common.submit":"Lưu",
+  "common.playlist":"Trình Phát Nhạc",
+  "common.total":"Tổng số",
+  "common.totalDuration":"Tổng thời lượng"
 };

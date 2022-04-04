@@ -69,4 +69,8 @@ export default {
   'common.deactive': 'Deactive',
   'common.active': 'Active',
   'common.export': 'Export file',
+  "common.submit":"Submit",
+  "common.playlist":"Play List",
+  "common.total":"Total",
+  "common.totalDuration":"Total Duration"
 };

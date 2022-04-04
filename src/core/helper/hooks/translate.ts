@@ -3,7 +3,7 @@ export type Keys = keyof typeof locale.en;
 import {useIntl} from 'react-intl';
 export const useAltaIntl = () => {
   const intl = useIntl();
-  const formatMessage = (key: keyof Keys): string => {
+  const formatMessage = (key: string): string => {
     return intl.formatMessage({id: key});
   };
   const translate = (key: string) => {
