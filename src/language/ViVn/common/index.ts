@@ -77,5 +77,11 @@ export default {
   "common.submit":"Lưu",
   "common.playlist":"Trình Phát Nhạc",
   "common.total":"Tổng số",
-  "common.totalDuration":"Tổng thời lượng"
+  "common.totalDuration":"Tổng thời lượng",
+  "common.songName":"Bài hát",
+  "common.singerName":"Ca sĩ",
+  "common.author":"Tác giả",
+  "common.duration":"Thời lượng",
+  "common.time":"Thời gian",
+  "common.playlistText":"Trình Phát"
 };

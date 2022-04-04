@@ -1,10 +1,109 @@
 import React, { useState } from 'react';
-import { View, Text, StatusBar, Image } from 'react-native';
+import { View, Text, StatusBar, Image, FlatList } from 'react-native';
 import { styles } from './Main.styles';
-import { MainLogic } from './Main.logic';
 import { CustomText } from './customText';
 import { DropDownTranslate } from './dropDownTranslate'
 import { useAltaIntl } from '~core/helper/hooks/translate';
+import { CustomTextList } from './customTextList'
+
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    song: 'My Love',
+    singer: "Tăng Phúc ft Mỹ Lệ ",
+    author: "Origin",
+    duration: "03:12"
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    song: 'Love to be love by you',
+    singer: "Nguyên Hà",
+    author: "Origin 2",
+    duration: "03:12"
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    song: 'Đừng hỏi em vì sao',
+    singer: "Đinh Hương",
+    author: "Mondaro",
+    duration: "03:12"
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    song: 'My Love',
+    singer: "Tăng Phúc ft Mỹ Lệ ",
+    author: "Origin",
+    duration: "03:12"
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    song: 'Love to be love by you',
+    singer: "Nguyên Hà",
+    author: "Origin 2",
+    duration: "03:12"
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    song: 'Đừng hỏi em vì sao',
+    singer: "Đinh Hương",
+    author: "Mondaro",
+    duration: "03:12"
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    song: 'My Love',
+    singer: "Tăng Phúc ft Mỹ Lệ ",
+    author: "Origin",
+    duration: "03:12"
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    song: 'Love to be love by you',
+    singer: "Nguyên Hà",
+    author: "Origin 2",
+    duration: "03:12"
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    song: 'Đừng hỏi em vì sao',
+    singer: "Đinh Hương",
+    author: "Mondaro",
+    duration: "03:12"
+  },
+];
+
+const DATA2 = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    time: '06:00:00 - 08:00:00',
+    playlist: "Top ca khúc 2021",
+    duration: "02g 00p 00g",
+    status: "Đang Phát"
+  },
+]
+
+const renderItem = ({ item }: any) => {
+  return (
+    <View style={styles.containerItem}>
+      <CustomText text={item.song} size="small" isMinWidth />
+      <CustomText text={item.singer} size="small" isMinWidth />
+      <CustomText text={item.author} size="small" isMinWidth />
+      <CustomText text={item.duration} size="small" isMinWidth />
+    </View>
+  )
+}
+
+const renderItemPlaylist = ({ item }: any) => {
+  return (
+    <View style={styles.containerItem}>
+      <CustomText text={item.time} size="small" isMinWidth />
+      <CustomText text={item.playlist} size="small" isMinWidth />
+      <CustomText text={item.duration} size="small" isMinWidth />
+      <CustomText text={item.status} size="small" isMinWidth />
+    </View>
+  )
+}
 
 
 export const Main: React.FC<any> = (props) => {
@@ -43,13 +142,44 @@ export const Main: React.FC<any> = (props) => {
           </View>
         </View>
         <View style={styles.containerListMusic}>
-          <Text>Text 2</Text>
+          <FlatList
+            data={DATA}
+            renderItem={(item) => renderItem(item)}
+            keyExtractor={item => item.id}
+            style={styles.containerItemMusic}
+            ListHeaderComponent={() => {
+              return (
+                <View style={styles.listMusicHeader}>
+                  <CustomTextList text={formatMessage("common.songName")} />
+                  <CustomTextList text={formatMessage("common.singerName")} />
+                  <CustomTextList text={formatMessage("common.author")} />
+                  <CustomTextList text={formatMessage("common.duration")} />
+                </View>
+              )
+            }}
+          />
         </View>
         <View style={styles.containerListPlayList}>
-          <Text>Text 3</Text>
+          <FlatList
+            data={DATA2}
+            renderItem={(item) => renderItemPlaylist(item)}
+            keyExtractor={item => item.id}
+            style={styles.containerItemMusic}
+            ListHeaderComponent={() => {
+              return (
+                <View style={styles.listMusicHeader}>
+                  <CustomTextList text={formatMessage("common.time")} isList />
+                  <CustomTextList text={formatMessage("common.playlistText")} isList />
+                  <CustomTextList text={formatMessage("common.duration")} isList />
+                  <CustomTextList text={formatMessage("common.status")} isList />
+                </View>
+              )
+            }}
+          />
         </View>
         <View style={styles.actions}>
-          <Text>Text 4</Text>
+          <View></View>
+          <View></View>
         </View>
       </View>
     </View>

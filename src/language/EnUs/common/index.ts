@@ -72,5 +72,11 @@ export default {
   "common.submit":"Submit",
   "common.playlist":"Play List",
   "common.total":"Total",
-  "common.totalDuration":"Total Duration"
+  "common.totalDuration":"Total Duration",
+  "common.songName":"Song",
+  "common.singerName":"Singer",
+  "common.author":"Author",
+  "common.duration":"Duration",
+  "common.time":"Time",
+  "common.playlistText":"Playlist"
 };

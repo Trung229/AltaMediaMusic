@@ -7,22 +7,26 @@ import {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   textStyle: {
     color: "#FFFFFF",
-    fontWeight: "700"
+    fontWeight: "700",
   },
   big: {
-    fontSize: 30,
+    fontSize: wp(3),
   },
   medium: {
-    fontSize: 15,
+    fontSize: wp(2),
     width: '100%',
     textAlign: 'center'
   },
   small: {
-    fontSize: 10
-  }
+    fontSize: wp(1),
+    fontWeight: "400",
+  },
+  addMargin: {
+    flex: 1,
+    height: "100%",
+    marginRight: 10,
+  },
 });

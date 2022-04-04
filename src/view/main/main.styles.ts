@@ -28,7 +28,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   headerLeft:{
-    flex:0.65
+    flex:0.65,
+    alignItems:"flex-start",
   },
   headerRight:{
     flex:0.35,
@@ -58,13 +59,15 @@ export const styles = StyleSheet.create({
     flex:0.2
   },
   containerListMusic:{
-    flex:0.3
+    flex:0.4,
+    marginLeft:10,
+    marginRight:10
   },
   containerListPlayList:{
     flex:0.3
   },
   actions:{
-    flex:0.2
+    flex:0.1
   },
   imageInfoMusic:{
     width:"100%",
@@ -89,5 +92,21 @@ export const styles = StyleSheet.create({
     fontWeight:"300",
     color:"#FFFFFF",
     opacity: 0.5,
+  },
+  listMusicHeader:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+  },
+  containerItemMusic:{
+    backgroundColor:"#2F2F41B2",
+    borderRadius:16,
+    padding:14
+  },
+  containerItem:{
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems: 'flex-end',
+    marginTop:10,
+    marginBottom:10
   }
 });
