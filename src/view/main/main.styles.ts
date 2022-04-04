@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
   },
   musicInfo:{
     alignItems:"center",
-    flex:0.2
+    flex:0.2,
   },
   containerListMusic:{
     flex:0.4,

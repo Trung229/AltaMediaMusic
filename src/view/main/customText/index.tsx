@@ -6,11 +6,9 @@ interface propsText {
   text: string,
   size: string,
   isMinWidth?: boolean,
-  isPosition?: boolean,
 }
 export const CustomText: React.FC<propsText> = (props) => {
-  const { text, size, isMinWidth, isPosition } = props
-  console.log("my position: ", isPosition);
+  const { text, size, isMinWidth } = props
   return (
     <View style={styles.container}>
       {size === "big" ?

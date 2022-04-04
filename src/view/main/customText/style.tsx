@@ -5,9 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+
   textStyle: {
     color: "#FFFFFF",
     fontWeight: "700",
@@ -18,7 +16,6 @@ export const styles = StyleSheet.create({
   medium: {
     fontSize: wp(2),
     width: '100%',
-    textAlign: 'center'
   },
   small: {
     fontSize: wp(1),
