@@ -74,4 +74,10 @@ export default {
   'common.return': 'Quay lại',
   'common.search.placeholder': 'Nhập từ khóa để tìm kiếm',
   'common.export': 'Xuất file',
+  'common.authenInputError': 'Hãy nhập tài khoản và mật khẩu',
+  'common.rememberLogin': 'GHi nhớ đăng nhập',
+  'common.login': 'Đăng nhập',
+  'common.userName': 'Tên đăng nhập',
+  'common.password': 'Password',
+  'common.forgotPassword': 'Quên mật khẩu',
 };
