@@ -7,6 +7,7 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import {TextView} from '../label';
@@ -28,10 +29,11 @@ export interface TextFieldFormikProps {
   field?: any;
   form?: any;
   label?: string;
+  lableStyle?: TextStyle;
   positionLabel?: 'top' | 'left';
 }
 
-export const TextFieldFormik: React.FC<TextFieldFormikProps> = (props) => {
+export const TextFieldFormik: React.FC<TextFieldFormikProps> = props => {
   const {
     containerStyle,
     prefix,
@@ -39,6 +41,7 @@ export const TextFieldFormik: React.FC<TextFieldFormikProps> = (props) => {
     suffix,
     suffixIcon,
     label,
+    lableStyle,
     field: {name, value, onChange, onBlur},
     form: {errors, touched, setFieldTouched},
     inputProps,
@@ -75,21 +78,23 @@ export const TextFieldFormik: React.FC<TextFieldFormikProps> = (props) => {
   return (
     <View style={[_styles.container, containerStyle]}>
       {!!label && positionLabel == 'top' && (
-        <TextView style={_styles.label} text={label} />
+        <TextView style={[_styles.label, lableStyle]} text={label} />
       )}
       <View style={_styles.content}>
         {renderPrefix()}
         {!!label && positionLabel == 'left' && (
-          <TextView style={_styles.label} text={label} />
+          <TextView style={[_styles.label, lableStyle]} text={label} />
         )}
         <View style={_styles.padding} />
-        <TextInput
-          {...inputProps}
-          onBlur={_onBlur}
-          value={value}
-          onChangeText={onChange(name)}
-          style={[_styles.input, inputProps?.style]}
-        />
+        <View style={_styles.inputField}>
+          <TextInput
+            {...inputProps}
+            onBlur={_onBlur}
+            value={value}
+            onChangeText={onChange(name)}
+            style={[_styles.input, inputProps?.style]}
+          />
+        </View>
         {renderSuffix()}
       </View>
       <View style={[_styles.divider, {backgroundColor: colorLine}]} />
@@ -111,7 +116,7 @@ const _styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingVertical: hp(0.5),
-    fontSize: wp(3),
+    fontSize: wp(2),
   },
   padding: {width: wp(3)},
   errorText: {
@@ -121,5 +126,14 @@ const _styles = StyleSheet.create({
   label: {
     fontSize: wp(3.5),
     fontWeight: '700',
+  },
+  inputField: {
+    backgroundColor: '#2B2B3F',
+    borderRadius: wp(1),
+    borderWidth: 1,
+    borderColor: 'white',
+    width: wp(30),
+    height: hp(8),
+    justifyContent: 'center',
   },
 });

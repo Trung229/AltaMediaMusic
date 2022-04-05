@@ -69,4 +69,10 @@ export default {
   'common.deactive': 'Deactive',
   'common.active': 'Active',
   'common.export': 'Export file',
+  'common.authenInputError': 'Please fill user name and password',
+  'common.rememberLogin': 'Remember login',
+  'common.login': 'Login',
+  'common.userName': 'Username',
+  'common.password': 'Password',
+  'common.forgotPassword': 'Forgot password',
 };
