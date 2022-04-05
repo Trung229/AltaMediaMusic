@@ -50,6 +50,7 @@ export const Auth: React.FC<any> = props => {
     rememberLogin,
     onPressRememberLogin,
     checkBoxColors,
+    onPressFocus,
   } = AuthLogic();
   const {login} = authPresenter;
   const signInBySingleAsync = useSingleAsync(login);
@@ -123,7 +124,7 @@ export const Auth: React.FC<any> = props => {
           initialValues={{userName: '', password: ''}}
           validationSchema={signInSchema}
           onSubmit={v => {
-            console.log('values: ', v);
+            onPressLogin(v.userName, v.password);
           }}>
           {formik => (
             <View>
@@ -144,7 +145,7 @@ export const Auth: React.FC<any> = props => {
                     console.log(formik.errors);
                   },
                   onFocus: () => {
-                    onPressLogin({});
+                    onPressFocus({});
                   },
                 }}
                 label={formatMessage('common.userName')}
@@ -166,7 +167,7 @@ export const Auth: React.FC<any> = props => {
                     onChangePassword(value);
                   },
                   onFocus: () => {
-                    onPressLogin({});
+                    onPressFocus({});
                   },
                 }}
                 label={formatMessage('common.password')}
@@ -176,10 +177,7 @@ export const Auth: React.FC<any> = props => {
               {render_checkbox()}
               <RectangleButton
                 title={formatMessage('common.login')}
-                onPress={() => {
-                  formik.submitForm;
-                  onPressLogin(formik.errors);
-                }}
+                onPress={formik.submitForm}
               />
             </View>
           )}
