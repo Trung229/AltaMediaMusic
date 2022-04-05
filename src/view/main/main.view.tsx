@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {styles} from './main.styles';
 import { mainLogic} from './main.logic';
-export const main: React.FC<any> = (props) => {
+export const Main: React.FC<any> = (props) => {
   const {} = props;
   const {} = mainLogic();
   return (
