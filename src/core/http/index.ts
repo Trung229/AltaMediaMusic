@@ -193,8 +193,5 @@ export class HTTPRepository {
       .catch((error: any) => this.handleError(error, showError));
   }
 }
-const httpRepository = new HTTPRepository(
-  env_set.API_BASE_URL,
-  store,
-);
+const httpRepository = new HTTPRepository(env_set.API_BASE_URL, store);
 export default httpRepository;

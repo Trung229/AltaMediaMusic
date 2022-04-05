@@ -32,12 +32,12 @@ export const AuthLogic = () => {
     } else {
       console.log(deviceUserName, ' ', devicePassword);
 
-      // signInBySingleAsync
-      //   ?.execute({
-      //     deviceUserName: deviceUserName,
-      //     devicePassword: devicePassword,
-      //   })
-      //   ?.then(res => console.log('res: ', res));
+      signInBySingleAsync
+        ?.execute({
+          deviceUserName: deviceUserName,
+          devicePassword: devicePassword,
+        })
+        ?.then(res => console.log('res: ', res));
     }
   };
 
