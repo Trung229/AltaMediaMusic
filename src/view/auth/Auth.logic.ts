@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {LanguageSelector} from '~modules/setting/settingStore';
 import * as Yup from 'yup';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import authPresenter from '~modules/authentication/presenter';
 import {useSingleAsync} from '~core/helper/hooks/useSingleAsync';
 
@@ -17,6 +17,13 @@ export const AuthLogic = () => {
   const {login} = authPresenter;
   const signInBySingleAsync = useSingleAsync(login);
 
+  useEffect(() => {
+    if (__DEV__) {
+      setUserName('Android.BoxT12');
+      setPassword('Alta@2021');
+    }
+  },[]);
+
   const checkBoxColors = {false: '#347AFF', true: '#FF7506'};
 
   const onChangeUserName = (text: string) => setUserName(text?.trim());
@@ -30,14 +37,13 @@ export const AuthLogic = () => {
         password: 'require password',
       });
     } else {
-      console.log(deviceUserName, ' ', devicePassword);
-
       signInBySingleAsync
         ?.execute({
           deviceUserName: deviceUserName,
           devicePassword: devicePassword,
         })
-        ?.then(res => console.log('res: ', res));
+        ?.then(res => console.log('res: ', res))
+        .catch(err => console.log('err: ', err));
     }
   };
 
@@ -58,6 +64,7 @@ export const AuthLogic = () => {
     dispatch,
     _changeIconShow,
     _changeIconHide,
+    userName,
     password,
     showPassword,
     language,

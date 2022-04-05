@@ -3,21 +3,30 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 import {CodePushSelector} from '~modules/setting/settingStore';
-import {Splash, Auth} from '~view';
+import {Splash, Auth, Main} from '~view';
 import {navigationRef} from '~core/helper/navigate';
+import {TokenSelector} from '~modules/authentication/profileStore';
 const Stack = createNativeStackNavigator();
 
-const privateScreen: any[] = [Auth];
+const privateScreen: any[] = [Main];
+const publicScreen = [Auth];
 
 const MainRouter = () => {
   const {splash} = useSelector(CodePushSelector);
+  const {token} = useSelector(TokenSelector);
+  console.log('token: ', token);
+
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         {!splash ? (
           <Stack.Screen name="SplashScreen" component={Splash} />
-        ) : (
+        ) : token ? (
           privateScreen.map((res: any) => {
+            return <Stack.Screen name={`${res}`} component={res} />;
+          })
+        ) : (
+          publicScreen.map((res: any) => {
             return <Stack.Screen name={`${res}`} component={res} />;
           })
         )}

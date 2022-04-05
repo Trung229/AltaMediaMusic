@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -19,10 +19,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import authPresenter from '~modules/authentication/presenter';
-import {useSingleAsync} from '~core/helper/hooks/useSingleAsync';
 import {useAltaIntl} from '~core/helper/hooks/translate';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import settingStore from '~modules/setting/settingStore';
 import {Image} from 'react-native-animatable';
 import {getSource} from '~assets';
@@ -31,6 +29,8 @@ import {values} from 'lodash';
 import TextInputField from '~components/input/TextInputField';
 import {RectangleButton, TextButton} from '~components';
 import CheckBox from '@react-native-community/checkbox';
+import {TokenSelector} from '~modules/authentication/profileStore';
+import {RootState} from '~modules';
 
 export const Auth: React.FC<any> = props => {
   const {} = props;
@@ -43,6 +43,7 @@ export const Auth: React.FC<any> = props => {
     _changeIconShow,
     showPassword,
     password,
+    userName,
     onChangePassword,
     onChangeUserName,
     inputErrors,
@@ -52,8 +53,6 @@ export const Auth: React.FC<any> = props => {
     checkBoxColors,
     onPressFocus,
   } = AuthLogic();
-  const {login} = authPresenter;
-  const signInBySingleAsync = useSingleAsync(login);
 
   const render_suffix = () => {
     if (password !== '') {
@@ -121,10 +120,10 @@ export const Auth: React.FC<any> = props => {
         </View>
         <Text style={styles.textLogin}>{formatMessage('common.login')}</Text>
         <Formik
-          initialValues={{userName: '', password: ''}}
+          initialValues={{userName, password}}
           validationSchema={signInSchema}
           onSubmit={v => {
-            onPressLogin(v.userName, v.password);
+            // console.log('v: ', v);
           }}>
           {formik => (
             <View>
@@ -177,7 +176,10 @@ export const Auth: React.FC<any> = props => {
               {render_checkbox()}
               <RectangleButton
                 title={formatMessage('common.login')}
-                onPress={formik.submitForm}
+                onPress={() => {
+                  // formik.submitForm();
+                  onPressLogin(formik.values.userName, formik.values.password);
+                }}
               />
             </View>
           )}
