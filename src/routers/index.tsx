@@ -30,6 +30,7 @@ const MainRouter = () => {
             return <Stack.Screen name={`${res}`} component={res} />;
           })
         )}
+        <Stack.Screen name="MainScreen" component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
   );

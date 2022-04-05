@@ -6,7 +6,7 @@ import {LanguageSelector} from '~modules/setting/settingStore';
 import Crash, {UserConfirmation} from 'appcenter-crashes';
 import AppCenter from 'appcenter';
 import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
-import {config} from '~config';
+import {env_set} from '~config';
 import {locale} from '~language';
 
 export const load = async () => {
@@ -16,7 +16,7 @@ export const load = async () => {
   }
   return AppCenter.getInstallId()
     .then(installId => {
-      config.installID = installId;
+      env_set.installID = installId;
     })
     .then(() => {
       return requestMultiple([
