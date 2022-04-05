@@ -83,5 +83,11 @@ export default {
   "common.author":"Tác giả",
   "common.duration":"Thời lượng",
   "common.time":"Thời gian",
-  "common.playlistText":"Trình Phát"
+  "common.playlistText":"Trình Phát",
+  'common.authenInputError': 'Hãy nhập tài khoản và mật khẩu',
+  'common.rememberLogin': 'GHi nhớ đăng nhập',
+  'common.login': 'Đăng nhập',
+  'common.userName': 'Tên đăng nhập',
+  'common.password': 'Password',
+  'common.forgotPassword': 'Quên mật khẩu',
 };

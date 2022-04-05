@@ -78,5 +78,11 @@ export default {
   "common.author":"Author",
   "common.duration":"Duration",
   "common.time":"Time",
-  "common.playlistText":"Playlist"
+  "common.playlistText":"Playlist",
+  'common.authenInputError': 'Please fill user name and password',
+  'common.rememberLogin': 'Remember login',
+  'common.login': 'Login',
+  'common.userName': 'Username',
+  'common.password': 'Password',
+  'common.forgotPassword': 'Forgot password',
 };
