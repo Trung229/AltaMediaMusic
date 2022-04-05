@@ -17,15 +17,23 @@ export const styles = StyleSheet.create({
     backgroundColor: '#1E1E2E',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    zIndex:10,
+  },
+  center:{
+    flex: 0.1,
+    width:"100%",
+    backgroundColor: '#1E1E2E',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end'
   },
   body: {
     padding:10,
-    flex: 0.8,
+    flex: 0.7,
     width:"100%",
     backgroundColor: '#1E1E2E',
     zIndex:-1,
     flexDirection:"row",
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerLeft:{
     flex:0.65,
@@ -48,6 +56,7 @@ export const styles = StyleSheet.create({
   },
   containerInfo:{
     marginRight:4,
+    maxHeight: 30
   },
   textRed:{
     color:"#B65100",
@@ -57,6 +66,7 @@ export const styles = StyleSheet.create({
   musicInfo:{
     alignItems:"center",
     flex:0.2,
+    maxHeight: 250
   },
   containerListMusic:{
     flex:0.4,
@@ -64,10 +74,17 @@ export const styles = StyleSheet.create({
     marginRight:10
   },
   containerListPlayList:{
-    flex:0.3
+    flex:0.3,
+    position: "relative",
   },
   actions:{
-    flex:0.1
+    flex:0.1,
+    backgroundColor:"#2F2F41",
+    maxHeight:hp(30),
+    marginLeft:wp(2),
+    borderRadius:10,
+    alignItems:"center",
+    justifyContent:"space-around",
   },
   imageInfoMusic:{
     width:"100%",
@@ -108,5 +125,23 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop:10,
     marginBottom:10
+  },
+  textSchedule:{
+    color:"#FFF",
+    marginRight:wp(14),
+    maxWidth:wp(100),
+    fontSize:wp(2)
+  },
+  imagesRight:{
+    width:wp(2),
+    height:wp(2)
+  },
+  circle:{
+    width:wp(4),
+    height:wp(4),
+    borderRadius:wp(4),
+    backgroundColor:"#72728880",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });

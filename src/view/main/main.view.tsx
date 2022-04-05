@@ -127,6 +127,9 @@ export const Main: React.FC<any> = (props) => {
           </View>
         </View>
       </View>
+      <View style={styles.center}>
+        <Text style={styles.textSchedule}>Lịch phát thứ 2 - 09/05/2021</Text>
+      </View>
       <View style={styles.body}>
         <View style={styles.musicInfo}>
           <Image style={styles.imageInfoMusic} source={{ uri: "https://s3-alpha-sig.figma.com/img/92ff/cb8b/b077d49bfcff456300a270e9ba86afb6?Expires=1650240000&Signature=DblLjowMIWBZMdMxqvijp072y5bsEUQdJ80IMbje-s7HNXkRbKibgp-5ztfh9XG0aDvMr4Odw5JrKdU6TtlALatCwUb5abDXPUI7Zp47v6lvPnsV8cJZZtGpEMKF8aWMeWlMQvTh7hW3qKGY~MM2LMvtmuzY-zHkkW5KhfwlzcnKbO6sI3ibUDGGrxHsCXanQFtz0tdLoMfQak2xRgJLl509QfNITsKGOH1HP~sU~GpxGWojoc2e6hkURAkmZrvy5oj2poWlgvE2Ki8gMXihWFnoyckoOdCV6yrR4fhevWLRUpliXXK7Z7mX5bWH3RvjWH3KJCiH8JsjEa8cBW~FOQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" }} />
@@ -178,10 +181,14 @@ export const Main: React.FC<any> = (props) => {
           />
         </View>
         <View style={styles.actions}>
-          <View></View>
-          <View></View>
+          <View style={styles.circle}>
+            <Image style={styles.imagesRight} source={require('../../assets/iconAdmin.png')} />
+          </View>
+          <View style={styles.circle}>
+            <Image style={styles.imagesRight} source={require('../../assets/iconContact.png')} />
+          </View>
         </View>
       </View>
-    </View>
+    </View >
   )
 }

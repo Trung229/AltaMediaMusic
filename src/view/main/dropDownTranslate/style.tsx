@@ -8,12 +8,12 @@ export const styles = StyleSheet.create({
   box: {
     backgroundColor: "transparent",
     borderColor: '#C8C8DB',
-    height: 35,
+    height: hp(8),
     borderRadius: 4,
   },
   iconNation: {
-    width: 20,
-    height: 20,
+    width: wp(2),
+    height: wp(2),
   },
   containerItem: {
     flexDirection: 'row',
@@ -22,10 +22,11 @@ export const styles = StyleSheet.create({
     padding: 10
   },
   nameNation: {
+    fontSize: wp(2),
     color: '#C8C8DB',
   },
   ArrowUpIcon: {
-    width: 20,
-    height: 20,
+    width: wp(3),
+    height: wp(3),
   }
 });

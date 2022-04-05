@@ -5,7 +5,10 @@ import {
 } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    justifyContent: "center"
+  },
   textStyle: {
     color: "#FFFFFF",
     fontWeight: "700",
@@ -24,6 +27,6 @@ export const styles = StyleSheet.create({
   addMargin: {
     flex: 1,
     height: "100%",
-    marginRight: 10,
+    marginRight: 10
   },
 });

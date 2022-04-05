@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './style'
 import DropDownPicker from 'react-native-dropdown-picker';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 type ValueType = string | number | boolean;
 
@@ -38,15 +42,15 @@ export const DropDownTranslate: React.FC<any> = (props) => {
       }}
       style={styles.box}
       textStyle={{
-        fontSize: 15,
+        fontSize: wp(1.5),
         color: "#C8C8DB"
       }}
-      ArrowDownIconComponent={() => <Image source={require("../../../assets/arrowDown.png")} />}
+      ArrowDownIconComponent={() => <Image style={styles.ArrowUpIcon} source={require("../../../assets/arrowDown.png")} />}
       ArrowUpIconComponent={() => <Image style={styles.ArrowUpIcon} source={require("../../../assets/ic_up.png")} />}
       renderListItem={(props) => <Item {...props} />}
       dropDownContainerStyle={{
-        backgroundColor: "transparent",
-        marginTop: 30,
+        backgroundColor: "#1E1E2E",
+        marginTop: wp(4),
         borderColor: "#FFFF",
       }}
     />
