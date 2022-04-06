@@ -79,3 +79,8 @@ export const AuthLogic = () => {
     onPressFocus,
   };
 };
+
+
+export const navigateToMain = (props:any):void =>{
+  props.navigation.navigate("MainScreen");
+}
