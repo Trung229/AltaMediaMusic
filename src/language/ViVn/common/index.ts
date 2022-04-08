@@ -90,4 +90,5 @@ export default {
   'common.userName': 'Tên đăng nhập',
   'common.password': 'Password',
   'common.forgotPassword': 'Quên mật khẩu',
+  'common.logout': 'Đăng xuất',
 };

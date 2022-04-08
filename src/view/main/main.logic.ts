@@ -3,6 +3,8 @@ import moment from 'moment';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import fetchBlob from 'react-native-fetch-blob'
 import { MenuItem } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { removeProfile } from '~modules/authentication/profileStore';
 
 
 export const readFileFromSystem =async () =>{
@@ -141,4 +143,9 @@ export const findMediaInPlaylist = (playlist:any):{} =>{
 export const storeFirstItem = (media:any) =>{
   console.log(media);
 }
+
+export const handleLogout = () => {
+  const dispatch = useDispatch();
+  dispatch(removeProfile());
+};
 

@@ -8,7 +8,8 @@
         "start": "react-native start",
         "test": "jest",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-        "postinstall": "husky install"
+        "postinstall": "husky install",
+        "clear": "cd android && "
     },
     "dependencies": {
         "@commitlint/cli": "^16.2.1",
