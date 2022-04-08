@@ -10,14 +10,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '~modules';
 import moment from 'moment';
 
-
-
-
-
-
-
-
-
 export const Main: React.FC<any> = (props) => {
   const { } = props;
   const flatListRef: any = useRef()
@@ -116,6 +108,9 @@ export const Main: React.FC<any> = (props) => {
               renderItem={(item) => renderItem(item, mediaID)}
               keyExtractor={item => item.id}
               style={styles.containerItemMusic}
+              getItemLayout={(data, index) => (
+                { length: data?.length, offset: 0, index }
+              )}
               ListHeaderComponent={() => {
                 return (
                   <View style={styles.listMusicHeader}>
