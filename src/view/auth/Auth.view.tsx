@@ -5,10 +5,10 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Platform,
-  StatusBar
+  StatusBar,
 } from 'react-native';
-import { styles } from './Auth.styles';
-import { AuthLogic } from './Auth.logic';
+import {styles} from './Auth.styles';
+import {AuthLogic} from './Auth.logic';
 import {
   FlatButton,
   FullScreenLoadingIndicator,
@@ -23,19 +23,19 @@ import {
 import { useAltaIntl } from '~core/helper/hooks/translate';
 import { useDispatch, useSelector } from 'react-redux';
 import settingStore from '~modules/setting/settingStore';
-import { Image } from 'react-native-animatable';
-import { getSource } from '~assets';
-import { Formik } from 'formik';
-import { values } from 'lodash';
+import {Image} from 'react-native-animatable';
+import {getSource} from '~assets';
+import {Formik} from 'formik';
+import {values} from 'lodash';
 import TextInputField from '~components/input/TextInputField';
-import { RectangleButton, TextButton } from '~components';
+import {RectangleButton, TextButton} from '~components';
 import CheckBox from '@react-native-community/checkbox';
 import { TokenSelector } from '~modules/authentication/profileStore';
 import { RootState } from '~modules';
 
 export const Auth: React.FC<any> = props => {
-  const { navigation } = props;
-  const { formatMessage } = useAltaIntl();
+  const {navigation} = props;
+  const {formatMessage} = useAltaIntl();
   const {
     dispatch,
     language,
@@ -107,7 +107,6 @@ export const Auth: React.FC<any> = props => {
       </View>
     );
   };
-
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
@@ -189,7 +188,7 @@ export const Auth: React.FC<any> = props => {
       <View style={styles.bottomContainer}>
         <TextButton
           title={formatMessage('common.forgotPassword')}
-          onPress={() => { }}
+          onPress={() => {}}
         />
       </View>
     </View>

@@ -59,6 +59,8 @@ export class HTTPRepository {
     showSuccess: boolean,
   ) {
     if (showSuccess) {
+      // console.log('response', response);
+
       Toast.show({
         type: 'success',
         text1: locale[this.language][response?.data?.message],

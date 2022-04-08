@@ -11,11 +11,30 @@ import { RootState } from '~modules';
 import moment from 'moment';
 import { TextButton } from '~components/button';
 import { removeProfile } from '~modules/authentication/profileStore';
+import { MusicPlayer } from '~components/music';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+
+const tracks2 = [
+  {
+    url: require('../../assets/audio/country.mp3'),
+    name: 'Blues Beat',
+    artist: 'Artist 1',
+  },
+  {
+    url: require('../../assets/audio/blues.wav'),
+    name: 'County',
+    artist: 'Artist 2',
+  },
+];
 
 export const Main: React.FC<any> = (props) => {
   const { } = props;
   const flatListRef: any = useRef()
   const dispatch = useDispatch();
+  const [childData, setChildData] = useState(-1);
   const scrollToIndex = (index: any) => {
     console.log("index", index);
     flatListRef?.current?.scrollToIndex({ animated: true, index: index, viewPosition: 1 })
@@ -66,6 +85,20 @@ export const Main: React.FC<any> = (props) => {
       </View>
     )
   }
+  const render_music_player = (hasTrack: boolean) => {
+    if (hasTrack === true) {
+      return (
+        <View style={{ height: hp(12) }}>
+          <MusicPlayer tracks={tracks2} callback={handleChildDataSent} />
+        </View>
+      );
+    }
+    return null;
+  };
+
+  const handleChildDataSent = (data: any) => {
+    setChildData(data);
+  };
 
   return (
     <View style={styles.container}>
@@ -188,7 +221,8 @@ export const Main: React.FC<any> = (props) => {
             />
           </View>
         </View>
-      </View >
-    </View >
+      </View>
+      {render_music_player(true)}
+    </View>
   );
 };
