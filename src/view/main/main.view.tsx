@@ -1,106 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { View, Text, StatusBar, Image, FlatList } from 'react-native';
 import { styles } from './Main.styles';
 import { CustomText } from './customText';
 import { DropDownTranslate } from './dropDownTranslate'
 import { useAltaIntl } from '~core/helper/hooks/translate';
 import { CustomTextList } from './customTextList'
+import { MainLogic, convertDurationToTime, sumDuration, checkStatus, findMediaInPlaylist, downloadImages } from './main.logic';
+import { useSelector } from 'react-redux';
+import { RootState } from '~modules';
+import moment from 'moment';
 
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    song: 'My Love',
-    singer: "Tăng Phúc ft Mỹ Lệ ",
-    author: "Origin",
-    duration: "03:12"
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    song: 'Love to be love by you',
-    singer: "Nguyên Hà",
-    author: "Origin 2",
-    duration: "03:12"
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    song: 'Đừng hỏi em vì sao',
-    singer: "Đinh Hương",
-    author: "Mondaro",
-    duration: "03:12"
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    song: 'My Love',
-    singer: "Tăng Phúc ft Mỹ Lệ ",
-    author: "Origin",
-    duration: "03:12"
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    song: 'Love to be love by you',
-    singer: "Nguyên Hà",
-    author: "Origin 2",
-    duration: "03:12"
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    song: 'Đừng hỏi em vì sao',
-    singer: "Đinh Hương",
-    author: "Mondaro",
-    duration: "03:12"
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    song: 'My Love',
-    singer: "Tăng Phúc ft Mỹ Lệ ",
-    author: "Origin",
-    duration: "03:12"
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    song: 'Love to be love by you',
-    singer: "Nguyên Hà",
-    author: "Origin 2",
-    duration: "03:12"
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    song: 'Đừng hỏi em vì sao',
-    singer: "Đinh Hương",
-    author: "Mondaro",
-    duration: "03:12"
-  },
-];
-
-const DATA2 = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    time: '06:00:00 - 08:00:00',
-    playlist: "Top ca khúc 2021",
-    duration: "02g 00p 00g",
-    status: "Đang Phát"
-  },
-]
 
 const renderItem = ({ item }: any) => {
   return (
     <View style={styles.containerItem}>
-      <CustomText text={item.song} size="small" isMinWidth />
-      <CustomText text={item.singer} size="small" isMinWidth />
-      <CustomText text={item.author} size="small" isMinWidth />
-      <CustomText text={item.duration} size="small" isMinWidth />
+      <CustomText text={item.mediaName} size="small" isMinWidth />
+      <CustomText text={item.mediaPerformer || "Chưa cập nhật"} size="small" isMinWidth />
+      <CustomText text={item.mediaAuthor} size="small" isMinWidth />
+      <CustomText text={convertDurationToTime(item.mediaDuration)} size="small" isMinWidth />
     </View>
   )
 }
 
 const renderItemPlaylist = ({ item }: any) => {
+  const duration = sumDuration(item.mediaResponses);
+  const status = checkStatus(item);
   return (
-    <View style={styles.containerItem}>
-      <CustomText text={item.time} size="small" isMinWidth />
-      <CustomText text={item.playlist} size="small" isMinWidth />
-      <CustomText text={item.duration} size="small" isMinWidth />
-      <CustomText text={item.status} size="small" isMinWidth />
+    <View style={[styles.containerItem, status.status ? styles.activeItem : styles.unActiveItem]}>
+      <CustomText text={`${item.timeBegin} - ${item.timeEnd}`} size="small" isMinWidth />
+      <CustomText text={item.playListName} size="small" isMinWidth />
+      <CustomText text={convertDurationToTime(duration || 0)} size="small" isMinWidth />
+      <CustomText text={status.message} size="small" isMinWidth />
     </View>
   )
 }
@@ -108,7 +39,23 @@ const renderItemPlaylist = ({ item }: any) => {
 
 export const Main: React.FC<any> = (props) => {
   const { } = props;
-  const { formatMessage } = useAltaIntl()
+  const { formatMessage } = useAltaIntl();
+  const flatListRef: any = useRef()
+  const [date, setDate] = useState<any>(moment(new Date()).format("MM-DD-YYYY"));
+  MainLogic();
+  const playlist: any = useSelector((state: RootState) => state.schedulesStore.listSchedules);
+  const newArr = [...playlist].sort((a, b) => parseInt(a.timeBegin) - parseInt(b.timeBegin));
+  const media: any = findMediaInPlaylist(playlist);
+  // console.log("media : ", media);
+  const scrollToIndex = () => {
+    console.log('scroll to index called !')
+    let index = 1
+    flatListRef?.current?.scrollToIndex({ animated: true, index: index })
+  }
+  useEffect(() => {
+    downloadImages(media)
+  }, [])
+  // scrollToIndex()
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
@@ -128,25 +75,27 @@ export const Main: React.FC<any> = (props) => {
         </View>
       </View>
       <View style={styles.center}>
-        <Text style={styles.textSchedule}>Lịch phát thứ 2 - 09/05/2021</Text>
+        <Text style={styles.textSchedule}>{`${formatMessage("common.playlistText")} ${moment().format('dddd MM-DD-YYYY')}`}</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.musicInfo}>
           <Image style={styles.imageInfoMusic} source={{ uri: "https://s3-alpha-sig.figma.com/img/92ff/cb8b/b077d49bfcff456300a270e9ba86afb6?Expires=1650240000&Signature=DblLjowMIWBZMdMxqvijp072y5bsEUQdJ80IMbje-s7HNXkRbKibgp-5ztfh9XG0aDvMr4Odw5JrKdU6TtlALatCwUb5abDXPUI7Zp47v6lvPnsV8cJZZtGpEMKF8aWMeWlMQvTh7hW3qKGY~MM2LMvtmuzY-zHkkW5KhfwlzcnKbO6sI3ibUDGGrxHsCXanQFtz0tdLoMfQak2xRgJLl509QfNITsKGOH1HP~sU~GpxGWojoc2e6hkURAkmZrvy5oj2poWlgvE2Ki8gMXihWFnoyckoOdCV6yrR4fhevWLRUpliXXK7Z7mX5bWH3RvjWH3KJCiH8JsjEa8cBW~FOQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" }} />
-          <CustomText text="Top Ca Khúc 2021" size="medium" />
+          <View style={styles.containerTitle}>
+            <Text style={styles.textTitlePlayList}>{media?.playListName}</Text>
+          </View>
           <View style={styles.line} />
           <View style={styles.containerText}>
             <CustomText text={formatMessage("common.total")} size="small" />
-            <Text style={styles.textLight}>8 Bản ghi</Text>
+            <Text style={styles.textLight}>{media?.mediaResponses?.length ?? 0} Bản ghi</Text>
           </View>
           <View style={styles.containerText}>
             <CustomText text={formatMessage("common.totalDuration")} size="small" />
-            <Text style={styles.textLight}>01:31:16</Text>
+            <Text style={styles.textLight}>{convertDurationToTime(sumDuration(media?.mediaResponses) || 0)}</Text>
           </View>
         </View>
         <View style={styles.containerListMusic}>
           <FlatList
-            data={DATA}
+            data={media?.mediaResponses}
             renderItem={(item) => renderItem(item)}
             keyExtractor={item => item.id}
             style={styles.containerItemMusic}
@@ -164,9 +113,10 @@ export const Main: React.FC<any> = (props) => {
         </View>
         <View style={styles.containerListPlayList}>
           <FlatList
-            data={DATA2}
+            data={newArr}
+            ref={flatListRef}
             renderItem={(item) => renderItemPlaylist(item)}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.scheduleId}
             style={styles.containerItemMusic}
             ListHeaderComponent={() => {
               return (

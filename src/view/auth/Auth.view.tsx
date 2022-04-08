@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,8 +20,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {useAltaIntl} from '~core/helper/hooks/translate';
-import {useDispatch, useSelector} from 'react-redux';
+import { useAltaIntl } from '~core/helper/hooks/translate';
+import { useDispatch, useSelector } from 'react-redux';
 import settingStore from '~modules/setting/settingStore';
 import { Image } from 'react-native-animatable';
 import { getSource } from '~assets';
@@ -30,8 +30,8 @@ import { values } from 'lodash';
 import TextInputField from '~components/input/TextInputField';
 import { RectangleButton, TextButton } from '~components';
 import CheckBox from '@react-native-community/checkbox';
-import {TokenSelector} from '~modules/authentication/profileStore';
-import {RootState} from '~modules';
+import { TokenSelector } from '~modules/authentication/profileStore';
+import { RootState } from '~modules';
 
 export const Auth: React.FC<any> = props => {
   const { navigation } = props;
@@ -122,7 +122,7 @@ export const Auth: React.FC<any> = props => {
         </View>
         <Text style={styles.textLogin}>{formatMessage('common.login')}</Text>
         <Formik
-          initialValues={{userName, password}}
+          initialValues={{ userName, password }}
           validationSchema={signInSchema}
           onSubmit={v => {
             // console.log('v: ', v);
@@ -143,7 +143,6 @@ export const Auth: React.FC<any> = props => {
                   onChangeText: (value: string) => {
                     formik.setFieldValue('userName', value, true);
                     onChangeUserName(value);
-                    console.log(formik.errors);
                   },
                   onFocus: () => {
                     onPressFocus({});

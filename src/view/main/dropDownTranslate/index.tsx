@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
 import { styles } from './style'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -21,11 +21,11 @@ const Item = (props: any) => {
 
 export const DropDownTranslate: React.FC<any> = (props) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<ValueType | null>(null);
   const [items, setItems] = useState([
-    { label: 'Tiếng Việt', value: 'Tiếng Việt' },
-    { label: 'English', value: 'English' }
+    { label: 'Tiếng Việt', value: 'Tiếng Việt', icon: () => <Image style={styles.iconNation} source={require('../../../assets/iconVI.png')} /> },
+    { label: 'English', value: 'English', icon: () => <Image style={styles.iconNation} source={require('../../../assets/iconEn.png')} /> }
   ]);
+  const [value, setValue] = useState<ValueType | null>(null);
   const { } = props
   return (
     <DropDownPicker
@@ -35,7 +35,6 @@ export const DropDownTranslate: React.FC<any> = (props) => {
       setOpen={setOpen}
       setValue={setValue}
       setItems={setItems}
-      placeholder="Tiếng Việt"
       containerProps={{
         flex: 0.6,
         justifyContent: "center",

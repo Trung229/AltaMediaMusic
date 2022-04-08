@@ -45,7 +45,7 @@ export class HTTPRepository {
     this.language = state.settingStore.language;
     s.subscribe(() => {
       const newState = s.getState();
-      const newToken = newState?.profile?.token;
+      const newToken = newState?.profileStore?.token;
       if (!lodash.isEmpty(newToken)) {
         this.service.defaults.headers.common.Authorization = `Bearer ${newToken}`;
       }

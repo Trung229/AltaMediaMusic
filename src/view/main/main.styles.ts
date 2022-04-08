@@ -64,9 +64,9 @@ export const styles = StyleSheet.create({
     fontWeight:"500"
   },
   musicInfo:{
-    alignItems:"center",
     flex:0.2,
-    maxHeight: 250
+    maxHeight: 250,
+    alignItems:"center",
   },
   containerListMusic:{
     flex:0.4,
@@ -143,5 +143,19 @@ export const styles = StyleSheet.create({
     backgroundColor:"#72728880",
     justifyContent: "center",
     alignItems: "center"
+  },
+  activeItem:{
+    opacity: 1
+  },
+  unActiveItem:{
+    opacity: .5
+  },
+  containerTitle:{
+
+  },
+  textTitlePlayList:{
+    color:"#FFF",
+    fontSize: wp(2),
+    fontWeight: "700",
   }
 });
