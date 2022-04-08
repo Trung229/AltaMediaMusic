@@ -1,6 +1,9 @@
 import {useDispatch} from 'react-redux';
+import {removeProfile} from '~modules/authentication/profileStore';
 export const MainLogic = () => {
   const dispatch = useDispatch();
-  return {dispatch};
-}
-
+  const handleLogout = () => {
+    dispatch(removeProfile());
+  };
+  return {dispatch, handleLogout};
+};

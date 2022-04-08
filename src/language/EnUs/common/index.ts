@@ -85,4 +85,5 @@ export default {
   'common.userName': 'Username',
   'common.password': 'Password',
   'common.forgotPassword': 'Forgot password',
+  'common.logout': 'Logout',
 };
