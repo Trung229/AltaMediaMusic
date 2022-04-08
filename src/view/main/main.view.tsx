@@ -1,61 +1,77 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
-import { View, Text, StatusBar, Image, FlatList } from 'react-native';
+import { View, Text, StatusBar, Image, FlatList, ActivityIndicator } from 'react-native';
 import { styles } from './Main.styles';
 import { CustomText } from './customText';
 import { DropDownTranslate } from './dropDownTranslate'
 import { useAltaIntl } from '~core/helper/hooks/translate';
 import { CustomTextList } from './customTextList'
-import { MainLogic, convertDurationToTime, sumDuration, checkStatus, findMediaInPlaylist, downloadImages } from './main.logic';
+import { MainLogic, convertDurationToTime, sumDuration, checkStatus, findMediaInPlaylist, downloadImages, storeFirstItem, readFileFromSystem } from './main.logic';
 import { useSelector } from 'react-redux';
 import { RootState } from '~modules';
 import moment from 'moment';
 
 
 
-const renderItem = ({ item }: any) => {
-  return (
-    <View style={styles.containerItem}>
-      <CustomText text={item.mediaName} size="small" isMinWidth />
-      <CustomText text={item.mediaPerformer || "Chưa cập nhật"} size="small" isMinWidth />
-      <CustomText text={item.mediaAuthor} size="small" isMinWidth />
-      <CustomText text={convertDurationToTime(item.mediaDuration)} size="small" isMinWidth />
-    </View>
-  )
-}
 
-const renderItemPlaylist = ({ item }: any) => {
-  const duration = sumDuration(item.mediaResponses);
-  const status = checkStatus(item);
-  return (
-    <View style={[styles.containerItem, status.status ? styles.activeItem : styles.unActiveItem]}>
-      <CustomText text={`${item.timeBegin} - ${item.timeEnd}`} size="small" isMinWidth />
-      <CustomText text={item.playListName} size="small" isMinWidth />
-      <CustomText text={convertDurationToTime(duration || 0)} size="small" isMinWidth />
-      <CustomText text={status.message} size="small" isMinWidth />
-    </View>
-  )
-}
+
+
+
 
 
 export const Main: React.FC<any> = (props) => {
   const { } = props;
-  const { formatMessage } = useAltaIntl();
   const flatListRef: any = useRef()
-  const [date, setDate] = useState<any>(moment(new Date()).format("MM-DD-YYYY"));
+  const scrollToIndex = (index: any) => {
+    console.log("index", index);
+    flatListRef?.current?.scrollToIndex({ animated: true, index: index, viewPosition: 1 })
+  }
+  const { formatMessage } = useAltaIntl();
+  const [mediaID, setMediaID] = useState("");
   MainLogic();
+  readFileFromSystem()
   const playlist: any = useSelector((state: RootState) => state.schedulesStore.listSchedules);
   const newArr = [...playlist].sort((a, b) => parseInt(a.timeBegin) - parseInt(b.timeBegin));
   const media: any = findMediaInPlaylist(playlist);
-  // console.log("media : ", media);
-  const scrollToIndex = () => {
-    console.log('scroll to index called !')
-    let index = 1
-    flatListRef?.current?.scrollToIndex({ animated: true, index: index })
-  }
   useEffect(() => {
     downloadImages(media)
+
   }, [])
-  // scrollToIndex()
+  useEffect(() => {
+    setMediaID(media?.mediaResponses[0]?.mediaId);
+  }, [mediaID])
+  const renderItemPlaylist = ({ item, index }: any) => {
+    const date = new Date();
+    const duration = sumDuration(item.mediaResponses);
+    const status = checkStatus(item);
+    if (item.timeBegin < moment(date).format("HH:mm:ss") && item.timeEnd > moment(date).format("HH:mm:ss")) {
+      scrollToIndex(index);
+    }
+    return (
+      <View style={[styles.containerItem, status.status ? styles.activeItem : styles.unActiveItem]}>
+        <CustomText text={`${item.timeBegin} - ${item.timeEnd}`} size="small" isMinWidth />
+        <CustomText text={item.playListName} size="small" isMinWidth />
+        <CustomText text={convertDurationToTime(duration || 0)} size="small" isMinWidth />
+        <CustomText text={status.message} size="small" isMinWidth />
+      </View>
+    )
+  }
+
+  const renderItem = ({ item, index }: any, id: string) => {
+    const mediaId = item.mediaId;
+    const isActive = id === mediaId ? true : false;
+    if (isActive) {
+      scrollToIndex(index);
+    }
+    return (
+      <View style={[styles.containerItem, isActive ? styles.activeItemMedia : styles.unActiveItemMedia]}>
+        <CustomText text={item.mediaName} size="small" isMinWidth />
+        <CustomText text={item.mediaPerformer || "Chưa cập nhật"} size="small" isMinWidth />
+        <CustomText text={item.mediaAuthor} size="small" isMinWidth />
+        <CustomText text={convertDurationToTime(item.mediaDuration)} size="small" isMinWidth />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar hidden={true} />
@@ -94,30 +110,38 @@ export const Main: React.FC<any> = (props) => {
           </View>
         </View>
         <View style={styles.containerListMusic}>
-          <FlatList
-            data={media?.mediaResponses}
-            renderItem={(item) => renderItem(item)}
-            keyExtractor={item => item.id}
-            style={styles.containerItemMusic}
-            ListHeaderComponent={() => {
-              return (
-                <View style={styles.listMusicHeader}>
-                  <CustomTextList text={formatMessage("common.songName")} />
-                  <CustomTextList text={formatMessage("common.singerName")} />
-                  <CustomTextList text={formatMessage("common.author")} />
-                  <CustomTextList text={formatMessage("common.duration")} />
-                </View>
-              )
-            }}
-          />
+          {playlist ?
+            <FlatList
+              data={media?.mediaResponses}
+              renderItem={(item) => renderItem(item, mediaID)}
+              keyExtractor={item => item.id}
+              style={styles.containerItemMusic}
+              ListHeaderComponent={() => {
+                return (
+                  <View style={styles.listMusicHeader}>
+                    <CustomTextList text={formatMessage("common.songName")} />
+                    <CustomTextList text={formatMessage("common.singerName")} />
+                    <CustomTextList text={formatMessage("common.author")} />
+                    <CustomTextList text={formatMessage("common.duration")} />
+                  </View>
+                )
+              }}
+            />
+            :
+            <ActivityIndicator />
+          }
         </View>
         <View style={styles.containerListPlayList}>
-          <FlatList
+          {playlist ? <FlatList
             data={newArr}
             ref={flatListRef}
             renderItem={(item) => renderItemPlaylist(item)}
             keyExtractor={item => item.scheduleId}
             style={styles.containerItemMusic}
+            getItemLayout={(data, index) => (
+              { length: data?.length, offset: 0, index }
+            )}
+            initialScrollIndex={playlist.length - 1}
             ListHeaderComponent={() => {
               return (
                 <View style={styles.listMusicHeader}>
@@ -128,7 +152,9 @@ export const Main: React.FC<any> = (props) => {
                 </View>
               )
             }}
-          />
+          /> :
+            <ActivityIndicator />
+          }
         </View>
         <View style={styles.actions}>
           <View style={styles.circle}>

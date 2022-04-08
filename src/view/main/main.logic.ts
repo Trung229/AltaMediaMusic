@@ -5,6 +5,14 @@ import fetchBlob from 'react-native-fetch-blob'
 import { MenuItem } from '@material-ui/core';
 
 
+export const readFileFromSystem =async () =>{
+  const arrMedia = await fetchBlob.fs.ls(fetchBlob.fs.dirs.CacheDir + `/files`)
+  .then((data) => {
+    return data
+  })
+  return arrMedia;
+}
+
 export const downloadImages =async (playlist:any) =>{  
   const date = new Date();
   const timeBegin = playlist.timeBegin;
@@ -34,7 +42,6 @@ export const downloadImages =async (playlist:any) =>{
     const check = arrMedia.some((mediaName)=>{
         return mediaName === finalName;
     })
-    console.log(check);
     if(!check){
     fetchBlob .config({
       path : fetchBlob.fs.dirs.CacheDir + `/files/${finalName}`
@@ -57,7 +64,6 @@ export const downloadImages =async (playlist:any) =>{
 export const MainLogic = async () => {
   const [data, setData] = useState("");
   useEffect(() => {
-    console.log("out");
     const timerIdInterVal = setInterval(() =>{
       if(true){
         schedulesPresenter.getListSchedules({
@@ -131,3 +137,8 @@ export const findMediaInPlaylist = (playlist:any):{} =>{
   })
   return media;
 }
+
+export const storeFirstItem = (media:any) =>{
+  console.log(media);
+}
+

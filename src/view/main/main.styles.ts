@@ -124,7 +124,9 @@ export const styles = StyleSheet.create({
     justifyContent:"space-between",
     alignItems: 'flex-end',
     marginTop:10,
-    marginBottom:10
+    marginBottom:10,
+    paddingTop:10,
+    paddingBottom:10
   },
   textSchedule:{
     color:"#FFF",
@@ -145,7 +147,8 @@ export const styles = StyleSheet.create({
     alignItems: "center"
   },
   activeItem:{
-    opacity: 1
+    opacity: 1,
+    fontWeight:"700",
   },
   unActiveItem:{
     opacity: .5
@@ -157,5 +160,13 @@ export const styles = StyleSheet.create({
     color:"#FFF",
     fontSize: wp(2),
     fontWeight: "700",
+  },
+  activeItemMedia:{
+   opacity: 1,
+   backgroundColor: '#3E3E5B',
+   fontWeight:"700",
+  },
+  unActiveItemMedia:{
+    opacity : .5,
   }
 });
