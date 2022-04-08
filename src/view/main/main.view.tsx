@@ -63,12 +63,12 @@ const tracks1 = [
 
 const tracks2 = [
   {
-    url: '../../assets/audio/blues.wav',
+    url: require('../../assets/audio/country.mp3'),
     name: 'Blues Beat',
     artist: 'Artist 1',
   },
   {
-    url: '../../assets/audio/country.mp3',
+    url: require('../../assets/audio/blues.wav'),
     name: 'County',
     artist: 'Artist 2',
   },

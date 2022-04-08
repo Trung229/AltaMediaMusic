@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -59,33 +59,25 @@ export interface MusicPlayerProps {
 
 const BASE_DIR = fetch.fs.dirs.CacheDir + '/dummy';
 
+const SAMLE_TRACKS = [
+  {
+    url: '/data/user/0/com.internship/files/dummy/637847354437334766_audio_xencryptionx.mp4',
+  },
+  {
+    url: '/data/user/0/com.internship/files/dummy/cad1768889c5b8580c42809249d29421_audio.mp4',
+  },
+];
+
 const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
   const {containerStyle, tracks, callback} = props;
+  const videoRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isRepeating, setIsRepeating] = useState(false);
   const [isRandom, setIsRandom] = useState(false);
-  const [percent, setPercent] = useState(0);
+  // const [percent, setPercent] = useState(0);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
-
   const [currentTrackId, setCurrentTrackId] = useState(0);
-  // const track_progress = useProgress();
-
-  // useEffect(() => {
-  //   setupTrackPlayer();
-
-  //   return () => TrackPlayer.destroy();
-  // }, []);
-
-  // useEffect(() => {
-  //   let index = getCurrentTrackIndex();
-  // }, [TrackPlayer]);
-
-  // const getCurrentTrackIndex = async () => {
-  //   return await TrackPlayer.getCurrentTrack();
-  // };
-
-  // console.log('duration: ', trackDuration, ', position: ', trackPosition);
 
   useEffect(() => {
     // fetch.fs
@@ -115,15 +107,6 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
     });
   };
 
-  // const setupTrackPlayer = async () => {
-  //   try {
-  //     await TrackPlayer.setupPlayer();
-  //     await TrackPlayer.add(tracks);
-  //   } catch (e) {
-  //     console.log('setup track player error: ', e);
-  //   }
-  // };
-
   const render_infor = (track?: any) => {
     return (
       <View style={styles.containerThubnail}>
@@ -143,11 +126,46 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
     );
   };
 
-  //   mediaContentVideoEncryptionKey: "745797ee15089e088ad76c84c6b33224"
+  // mediaContentVideoEncryptionKey: "745797ee15089e088ad76c84c6b33224"
   // mediaContentVideoEncryptionKeyId: "52c8a072e2602173b5af6ab8f12bb973"
 
   const select_next_track = () => {
     setCurrentTrackId(currentTrackId + 1);
+  };
+
+  const play_music = (index: number) => {
+    if (index < tracks.length) {
+      return (
+        <Video
+          // source={{
+          //   uri: '/data/user/0/com.internship/files/dummy/637847354437334823_xencryptionx.mpd',
+          //   type: 'mpd',
+          // }}
+          // drm={{
+          //   type: DRMType.CLEARKEY,
+          //   //@ts-ignore
+          //   payload: '745797ee15089e088ad76c84c6b33224',
+          //   kId: '52c8a072e2602173b5af6ab8f12bb973',
+          // }}
+
+          source={tracks[index].url}
+          audioOnly={true}
+          onEnd={() => {
+            console.log('track end');
+            select_next_track();
+          }}
+          onBuffer={() => callback(index)}
+          paused={!isPlaying}
+          playInBackground={true}
+          onProgress={data => {
+            setPosition(data.currentTime);
+            setDuration(data.seekableDuration);
+          }}
+          onError={err => console.log('error ', err)}
+        />
+      );
+    }
+    return null;
   };
 
   const render_seek_bar = () => {
@@ -155,33 +173,7 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
       <View style={styles.containerSeekBar}>
         <View style={styles.buttonsSection}>
           <View style={styles.margin} />
-          <Video
-            source={{
-              uri: '/data/user/0/com.internship/files/dummy/637847354437334823_xencryptionx.mpd',
-              type: 'mpd',
-            }}
-            // source={require(tracks[0].url)}
-            audioOnly={true}
-            onEnd={() => console.log('track end')}
-            onLoad={data => {
-              callback(data.audioTracks[0].index);
-            }}
-            // paused={!isPlaying}
-            playInBackground={true}
-            repeat={isRepeating}
-            onProgress={data => {
-              setPercent(data.currentTime / (data.seekableDuration || 1));
-              setPosition(data.currentTime);
-              setDuration(data.seekableDuration);
-            }}
-            drm={{
-              type: DRMType.CLEARKEY,
-              //@ts-ignore
-              payload: '745797ee15089e088ad76c84c6b33224',
-              kId: '52c8a072e2602173b5af6ab8f12bb973',
-            }}
-            onError={err => console.log('error ', err)}
-          />
+          {play_music(currentTrackId)}
           <MusicPlayerButton
             switchBool={isRandom}
             onPressBoolTrue={() => {
@@ -197,11 +189,9 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
             switchBool={isPlaying}
             onPressBoolTrue={() => {
               setIsPlaying(!isPlaying);
-              // TrackPlayer.pause();
             }}
             onPressBoolFalse={() => {
               setIsPlaying(!isPlaying);
-              // TrackPlayer.play();
             }}
             icon_source={getSource('IC_PLAY')}
             icon_style={styles.iconPlay}
@@ -211,11 +201,9 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
             switchBool={isRepeating}
             onPressBoolTrue={() => {
               setIsRepeating(!isRepeating);
-              // TrackPlayer.setRepeatMode(RepeatMode.Off);
             }}
             onPressBoolFalse={() => {
               setIsRepeating(!isRepeating);
-              // TrackPlayer.setRepeatMode(RepeatMode.Track);
             }}
             icon_source={getSource('IC_REPEAT')}
             conatiner_style={styles.iconButtonPadding}
@@ -223,7 +211,9 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
         </View>
         <View style={styles.seekbarSection}>
           <View style={styles.margin} />
-          <Text style={styles.textDuration}>{position}</Text>
+          <Text style={styles.textDuration}>
+            {new Date(position * 1000 || 0).toISOString().substr(14, 5)}
+          </Text>
           <Progress.Bar
             progress={position / (duration || 1)}
             width={wp(50)}
@@ -232,13 +222,13 @@ const _MusicPlayer: React.FC<MusicPlayerProps> = props => {
             color="white"
             borderWidth={0}
           />
-          <Text style={styles.textDuration}>{duration}</Text>
+          <Text style={styles.textDuration}>
+            {new Date(duration * 1000 || 0).toISOString().substr(14, 5)}
+          </Text>
         </View>
       </View>
     );
   };
-
-  const handle_select_next_track = () => {};
 
   return (
     <View style={[styles.container, containerStyle]}>
