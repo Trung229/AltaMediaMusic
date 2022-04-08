@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import MainRouter from './src/routers';
 import _BackgroundTimer from 'react-native-background-timer';
@@ -7,10 +7,15 @@ import MQTTProvider from './src/core/helper/hooks/mqtt';
 import Toast from 'react-native-toast-message';
 import {toastConfig} from '~components';
 import {IntlProvider} from 'react-intl';
-
 import {AppLogic} from './src';
+import {useDispatch} from 'react-redux';
+import {removeProfile} from '~modules/authentication/profileStore';
 const App = () => {
   const {will, clientId, language, memoLangData} = AppLogic();
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(removeProfile());
+  // },[]);
 
   return (
     <IntlProvider
